@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>First Page</title>
+  <link rel="stylesheet" href="/static/stylesLogin.css" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+  <br><br>
+    <div class="w3-hover-shadow w3-auto w3-white w3-round-large " >
+        <div class="heading" align="center">
+                <h2 style="color:#048998">Login Page</h2>
+        </div>
+            <div class="container">
+                    <form action = "{{ url_for('postlogin') }}" method = "POST">
+                        Custormer ID : <br>
+                        <input type="text" name="customerid" ><br>
+                        Password : <br>
+                        <input type="password" name="password"><br><br>
+                        <button class="button">Sign In</button>
+                    </form>
+                    <br><br>
+                    Not Registerd Yet?
+                    
+                    <form action="{{ url_for('newregister') }}" method="POST">
+                      <button class="w3-button w3-white w3-border w3-border-indigo ">New Register</button>
+                    </form>
+            </div>
+        <br>
+        <br>
+          </div>
+</body>
+</html>
+
+

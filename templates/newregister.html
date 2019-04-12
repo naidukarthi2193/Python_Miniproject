@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="/static/stylesRegister.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+    <div class="w3-hover-shadow w3-auto w3-white w3-round-large w3-padding">
+        <h1 align="center">Add Employee</h1>
+        <form action = "{{ url_for('newregisterdone') }}" method = "POST">
+        Customer ID : <br>
+        <input type="text" name="customerid" ><br>
+        Password : <br>
+        <input type="password" name="pass"><br>
+        Confirm Password : <br>
+        <input type="password" name="confirmpass"><br>  
+        Enter Name : <br>
+        <input type="text" name="name"><br>
+        Enter Credit Score : <br>
+        <input type="text" name="creditscore"><br>
+        Enter Location : <br>
+        <div class="w3-padding">
+        <input class="w3-radio" type="radio" name="location" value="France" checked>France
+        <input class="w3-radio" type="radio" name="location" value="Spain"> Spain
+        <input class="w3-radio" type="radio" name="location" value="Germany">Germany
+        <br>
+    </div>
+        Enter Age : <br>
+        <input type="text" name="age"><br>
+        Select Gender : <br>
+        <div class="w3-padding">
+        <input class="w3-radio" type="radio" name="gender" value="male" checked>Male
+        <input class="w3-radio" type="radio" name="gender" value="female"> Female<br>
+        </div>
+        Enter Tenure : <br>
+        <input type="text" name="tenure"><br>
+        Enter Balance : <br>
+        <input type="text" name="balance"><br>
+        Enter Number of Products : <br>
+        <input type="text" name="products"><br>
+        Has Credit Card : <br>
+        <div class="w3-padding">
+        <input class="w3-radio" type="radio" name="credit" value="0" checked>No
+        <input class="w3-radio" type="radio" name="credit" value="1"> Yes<br>
+        </div>
+        Is Active Member : <br>
+        <div class="w3-padding">
+        <input class="w3-radio" type="radio" name="member" value="0" checked>No
+        <input class="w3-radio" type="radio" name="member" value="1"> Yes<br>
+        </div>
+        Enter Salary : <br>
+        <input type="text" name="salary"><br><br>
+
+        <button class="button">Submit</button>
+        <br>
+    </form>
+    </div>   
+</body>
+</html>

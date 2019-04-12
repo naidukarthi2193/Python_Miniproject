@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+        <div class="w3-responsive">
+                <table class="w3-table-all w3-hoverable">
+                    <thead>
+                        <tr class="w3-light-grey">
+                            <th>Customer ID</th>
+                            <th>Name</th>
+                            <th>Credit Score</th>
+                            <th>Location</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Tenure</th>
+                            <th>Balance</th>
+                            <th>Products</th>
+                            <th>Credit Card</th>
+                            <th>Active Member</th>
+                            <th>Salary</th>
+                        </tr>
+                        {% for row in rows %}
+                        <tr>
+                            <td>{{row["customerid"]}}</td>
+                            <td>{{row["name"]}}</td>
+                            <td> {{ row["creditscore"]}}</td>
+                            <td>{{row['location']}}</td>
+                            <td>{{row['Gender']}}</td>
+                            <td>{{row['age']}}</td>
+                            <td>{{row['tenure']}}</td>
+                            <td>{{row['balance']}}</td>
+                            <td>{{row['products']}}</td>
+                            <td>{{row['card']}}</td>
+                            <td>{{row['member']}}</td>
+                            <td>{{row['salary']}}</td>	
+                        </tr>
+                        {% endfor %}
+                    </thead>
+                  
+                </table>
+                <br><br>
+                <a href = "/">Go back to home page</a>
+              </div>
+
+
+
+
+</body>
