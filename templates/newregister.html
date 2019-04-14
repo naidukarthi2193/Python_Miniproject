@@ -5,13 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Employee</title>
-    <link rel="stylesheet" href="/static/stylesRegister.css">
+    <link rel="stylesheet" href="/static/stylesLogin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 </head>
 <body>
+        <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <a class="navbar-brand">Python Bank</a>
+                  </div>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+                  </ul>
+                </div>
+              </nav>
     <div class="w3-hover-shadow w3-auto w3-white w3-round-large w3-padding">
-        <h1 align="center">Add Employee</h1>
+        <h1 align="center" style="color:#048998">Add Employee</h1>
         <form action = "{{ url_for('newregisterdone') }}" method = "POST">
         Customer ID : <br>
         <input type="text" name="customerid" ><br>
@@ -34,8 +47,8 @@
         <input type="text" name="age"><br>
         Select Gender : <br>
         <div class="w3-padding">
-        <input class="w3-radio" type="radio" name="gender" value="male" checked>Male
-        <input class="w3-radio" type="radio" name="gender" value="female"> Female<br>
+        <input class="w3-radio" type="radio" name="gender" value="Male" checked>Male
+        <input class="w3-radio" type="radio" name="gender" value="Female"> Female<br>
         </div>
         Enter Tenure : <br>
         <input type="text" name="tenure"><br>
@@ -60,5 +73,8 @@
         <br>
     </form>
     </div>   
+    <br>
+    <br>
+    <br>
 </body>
 </html>

@@ -27,6 +27,13 @@
           <br>
                 <h2 style="color:#048998">Login Page</h2>
         </div>
+        <div class="alert alert-danger " role="alert">
+            {% if error %}
+            <p><strong>Error:</strong> {{ error }}
+         {% endif %}
+         <span class="glyphicon glyphicon-alert glyphicon-align-right"></span>
+          </div>
+        
             <div class="container">
                     <form action = "{{ url_for('postlogin') }}" method = "POST">
                         Custormer ID : <br>

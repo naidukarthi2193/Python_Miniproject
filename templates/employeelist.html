@@ -1,54 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+< lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Employee List</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-        <div class="w3-responsive">
-                <table class="w3-table-all w3-hoverable">
-                    <thead>
-                        <tr class="w3-light-grey">
-                            <th>Customer ID</th>
-                            <th>Name</th>
-                            <th>Credit Score</th>
-                            <th>Location</th>
-                            <th>Gender</th>
-                            <th>Age</th>
-                            <th>Tenure</th>
-                            <th>Balance</th>
-                            <th>Products</th>
-                            <th>Credit Card</th>
-                            <th>Active Member</th>
-                            <th>Salary</th>
-                        </tr>
+              <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <a class="navbar-brand">Python Bank</a>
+                  </div>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                  </ul>
+                </div>
+              </nav>
+
+<br><br>
+<br>
+<br>
+<h1 align="center" style="color:#048998">Employee Details</h1>
+<br><br>
+        <div class="w3-responsive" style="margin:10px">
+                <table class="table table-hover  table-responsive" id="tableMain">        
+                    <tbody>
                         {% for row in rows %}
-                        <tr>
-                            <td>{{row["customerid"]}}</td>
-                            <td>{{row["name"]}}</td>
+                        <tr class="breakrow w3-indigo" >
+                          <td colspan="2">Customer Id :</td>
+                          <td colspan="2">{{row["customerid"]}}</td>
+                          <td colspan="2">Name :</td>
+                          <td colspan="2">{{row["name"]}}</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr class="datarow">
+                          <td class="w3-light-grey">Credit Score :</td>
                             <td> {{ row["creditscore"]}}</td>
+                            <td class="w3-light-grey">Location :</td>
                             <td>{{row['location']}}</td>
-                            <td>{{row['Gender']}}</td>
-                            <td>{{row['age']}}</td>
-                            <td>{{row['tenure']}}</td>
+                            <td class="w3-light-grey">Gender :</td>
+                          <td>{{row['Gender']}}</td>
+                          <td class="w3-light-grey">Age :</td>
+                          <td>{{row['age']}}</td>
+                          <td class="w3-light-grey">Tenure :</td>
+                          <td>{{row['tenure']}}</td>
+                        </tr>
+                        <tr class="datarow">
+                            <td class="w3-light-grey">Balance :</td>
                             <td>{{row['balance']}}</td>
-                            <td>{{row['products']}}</td>
-                            <td>{{row['card']}}</td>
-                            <td>{{row['member']}}</td>
-                            <td>{{row['salary']}}</td>	
+                            <td class="w3-light-grey">Products :</td>
+                          <td>{{row['products']}}</td>
+                          <td class="w3-light-grey">Card :</td>
+                          <td>{{row['card']}}</td>
+                          <td class="w3-light-grey">Salary :</td>
+                          <td>{{row['salary']}}</td>
+                          <td class="w3-light-grey">Member</td>
+                          <td>{{row['member']}}</td>
                         </tr>
                         {% endfor %}
-                    </thead>
+                    </tbody>
                   
                 </table>
                 <br><br>
-                <a href = "/">Go back to home page</a>
+
               </div>
 
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            
+            //collapse and expand sections
+            //$('.breakrow').click(function(){
+			$('#tableMain').on('click', 'tr.breakrow',function(){
+                $(this).nextUntil('tr.breakrow').slideToggle(200);
+            });
+        });
+    </script>
 
 </body>
