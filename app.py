@@ -15,33 +15,6 @@ from sklearn.metrics import confusion_matrix
 
 app = Flask(__name__)
 
-@app.route('/home')
-def start():
-   dataset = pd.read_csv('Churn_Modelling.csv')
-   X = dataset.iloc[:, 3:13].values
-   y = dataset.iloc[:, 13].values
-   labelencoder_X_1 = LabelEncoder()
-   X[:, 1] = labelencoder_X_1.fit_transform(X[:, 1])
-   labelencoder_X_2 = LabelEncoder()
-   X[:, 2] = labelencoder_X_2.fit_transform(X[:, 2])
-   onehotencoder = OneHotEncoder(categorical_features=[1])
-   X = onehotencoder.fit_transform(X).toarray()
-   X = X[:, 1:]
-   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-   sc = StandardScaler()
-   X_train = sc.fit_transform(X_train)
-   X_test = sc.transform(X_test)
-   classifier = Sequential()
-   classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu', input_dim=11))
-   classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
-   classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
-   classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-   classifier.fit(X_train, y_train, batch_size=5, epochs=10)
-   return render_template("start.html")
-
-
-
-
 @app.route('/')
 def home():
    return render_template('login_page.html')
@@ -55,6 +28,7 @@ def newregister():
 @app.route('/newregisterdone', methods=['POST', 'GET'])
 def newregisterdone():
    msg="default"
+   value=[0.0]
    if request.method == 'POST':
       msg="posted"
       try:
@@ -64,31 +38,77 @@ def newregisterdone():
          # password = hashlib.sha256(password.encode()).hexdigest()
          print(password)
          name = request.form['name']
-         credit = request.form['creditscore']
          location = request.form['location']
-         age = request.form['age']
+         if location=="France":
+            value.append(0)
+         if location=="Germany":
+            value.append(1)
+         if location=="Spain":
+            value.append(2)
+         credit = int(request.form['creditscore'])
+         value.append(credit)
          gender = request.form['gender']
-         tenure = request.form['tenure']
-         balance = request.form['balance']
-         products = request.form['products']
-         card = request.form['credit']
-         member = request.form['member']
-         salary=request.form['salary']
-         print("REacheddd")
-         con=sql.connect("bank.db")
-         cur=con.cursor()
+         if gender=="Female":
+            value.append(0)
+         else:
+            value.append(1)
+         age = int(request.form['age'])
+         value.append(age)
+         tenure = int(request.form['tenure'])
+         value.append(tenure)
+         balance = int(request.form['balance'])
+         value.append(balance)
+         products = int(request.form['products'])
+         value.append(products)
+         card = int(request.form['credit'])
+         value.append(card)
+         member = int(request.form['member'])
+         value.append(member)
+         salary=int(request.form['salary'])
+         value.append(salary)
+         print("THE VALUE IS :::::::::")
+         print(value)
+         dataset = pd.read_csv('Churn_Modelling.csv')
+         X = dataset.iloc[:, 3:13].values
+         y = dataset.iloc[:, 13].values
+         labelencoder_X_1 = LabelEncoder()
+         X[:, 1] = labelencoder_X_1.fit_transform(X[:, 1])
+         labelencoder_X_2 = LabelEncoder()
+         X[:, 2] = labelencoder_X_2.fit_transform(X[:, 2])
+         onehotencoder = OneHotEncoder(categorical_features=[1])
+         X = onehotencoder.fit_transform(X).toarray()
+         X = X[:, 1:]
+         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+         sc = StandardScaler()
+         X_train = sc.fit_transform(X_train)
+         X_test = sc.transform(X_test)
+         classifier = Sequential()
+         classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu', input_dim=11))
+         classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
+         classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
+         classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+         classifier.fit(X_train, y_train, batch_size=5, epochs=10)
+
+         new_prediction = classifier.predict(sc.transform(np.array([value])))
+         new_prediction=float(new_prediction[0][0])
+         new_prediction=int(100*new_prediction)
          msg="reached"
+         print(msg)
+         con = sql.connect("bank.db")
+         cur = con.cursor()
          cur.execute("INSERT INTO login(username,password)VALUES(?, ?)",(customerid,password))
          msg="reached1"
-         cur.execute("INSERT INTO employee(customerid,name,creditscore,location,gender,age,tenure,balance,products,card,member,salary)VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",(customerid,name,credit,location,gender,age,tenure,balance,products,card,member,salary))
+         print(msg)
+         cur.execute("INSERT INTO employee(customerid,name,creditscore,location,gender,age,tenure,balance,products,card,member,salary,prediction)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",(customerid,name,credit,location,gender,age,tenure,balance,products,card,member,salary,new_prediction))
          msg="reached2"
+         print(msg)
          con.commit()
          msg = "Record successfully added"
       except:
          con.rollback()
          msg = "error in insert operation"
       finally:
-         return render_template("result.html", msg=msg)
+         return render_template("login_not_page.html", error=msg)
          con.close()
 
 
@@ -105,7 +125,6 @@ def postlogin():
          cur = con.cursor()
          cur.execute("SELECT * FROM login")
          rows = cur.fetchall()
-         # value=new_prediction = classifier.predict(sc.transform(np.array([[0.0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]])))
          c=0
          for row in rows:
             print(row[0])
@@ -125,10 +144,11 @@ def postlogin():
          msg = "Login Error"
       finally:
          if(c==1):
-            return render_template("employeelist.html", rows=rows)
+            return render_template("employeelist.html", rows=rows,value=value)
             con.close()
          else:
             error = 'Invalid username or password. Please try again!'
             return render_template('login_not_page.html', error=error)
+
 if __name__ == '__main__':
    app.run(debug=True)

@@ -26,18 +26,19 @@
 <br>
 <br>
 <h1 align="center" style="color:#048998">Employee Details</h1>
-<br><br>
-        <div class="w3-responsive" style="margin:10px">
+<br>
+              {{value}}
+              <br>
+        <div class="w3-responsive" style="margin:100px">
                 <table class="table table-hover  table-responsive" id="tableMain">        
                     <tbody>
                         {% for row in rows %}
-                        <tr class="breakrow w3-indigo" >
-                          <td colspan="2">Customer Id :</td>
-                          <td colspan="2">{{row["customerid"]}}</td>
-                          <td colspan="2">Name :</td>
-                          <td colspan="2">{{row["name"]}}</td>
-                          <td></td>
-                          <td></td>
+                        <tr class="breakrow" >
+                          <td class="w3-indigo" colspan="1">Customer Id :</td>
+                          <td class="w3-text-indigo" colspan="4">{{row["customerid"]}}</td>
+                          <td class="w3-indigo" colspan="1">Name :</td>
+                          <td class="w3-text-indigo" colspan="4">{{row["name"]}}</td>
+                          
                         </tr>
                         <tr class="datarow">
                           <td class="w3-light-grey">Credit Score :</td>

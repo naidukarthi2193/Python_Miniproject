@@ -1,5 +1,17 @@
 
 
+import hashlib
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import confusion_matrix
+
 dataset = pd.read_csv('Churn_Modelling.csv')
 X = dataset.iloc[:, 3:13].values
 y = dataset.iloc[:, 13].values
@@ -35,8 +47,13 @@ Has Credit Card: Yes
 Is Active Member: Yes
 Estimated Salary: 50000"""
 
-new_prediction = classifier.predict(sc.transform(np.array([[0.0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]])))
+
+new_prediction = classifier.predict(sc.transform(np.array([[0.0, 0, 625, 1, 23, 2, 132123, 23, 0, 1, 1323123]])))
+
+
 
 print(new_prediction)
+
+print()
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
