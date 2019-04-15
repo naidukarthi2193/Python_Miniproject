@@ -19,11 +19,9 @@ app = Flask(__name__)
 def home():
    return render_template('login_page.html')
 
-
 @app.route('/newregister', methods=['POST', 'GET'])
 def newregister():
    return render_template("newregister.html")
-
 
 @app.route('/newregisterdone', methods=['POST', 'GET'])
 def newregisterdone():
@@ -33,8 +31,8 @@ def newregisterdone():
       msg="posted"
       try:
          msg="tried"
-         customerid = request.form['customerid']
-         password = request.form['pass']
+         customerid = str(request.form['customerid'])
+         password = str(request.form['pass'])
          # password = hashlib.sha256(password.encode()).hexdigest()
          print(password)
          name = request.form['name']
@@ -91,15 +89,25 @@ def newregisterdone():
 
          new_prediction = classifier.predict(sc.transform(np.array([value])))
          new_prediction=float(new_prediction[0][0])
+         print(new_prediction)
          new_prediction=int(100*new_prediction)
-         msg="reached"
+         print(new_prediction)
+         new_prediction=str(new_prediction)
          print(msg)
          con = sql.connect("bank.db")
          cur = con.cursor()
-         cur.execute("INSERT INTO login(username,password)VALUES(?, ?)",(customerid,password))
+         print("Connected")
+         print(customerid)
+         print(password)
+
+         
+
+
+
+         cur.execute("INSERT INTO login VALUES (?,?)",(customerid,password))
          msg="reached1"
          print(msg)
-         cur.execute("INSERT INTO employee(customerid,name,creditscore,location,gender,age,tenure,balance,products,card,member,salary,prediction)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",(customerid,name,credit,location,gender,age,tenure,balance,products,card,member,salary,new_prediction))
+         cur.execute("INSERT INTO employee(customerid,name,creditscore,location,gender,age,tenure,balance,products,card,member,salary,prediction) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",(customerid,name,credit,location,gender,age,tenure,balance,products,card,member,salary,new_prediction))
          msg="reached2"
          print(msg)
          con.commit()
@@ -110,6 +118,15 @@ def newregisterdone():
       finally:
          return render_template("login_not_page.html", error=msg)
          con.close()
+
+
+      # except:
+      #    con.rollback()
+      #    msg = "error in insert operation"
+
+
+
+
 
 
 @app.route('/postlogin', methods=['POST', 'GET'])
@@ -144,7 +161,7 @@ def postlogin():
          msg = "Login Error"
       finally:
          if(c==1):
-            return render_template("employeelist.html", rows=rows,value=value)
+            return render_template("employeelist.html", rows=rows)
             con.close()
          else:
             error = 'Invalid username or password. Please try again!'
